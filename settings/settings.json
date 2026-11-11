@@ -51,7 +51,7 @@
 		{
 			"id": "showMessage",
 			"label": "Show Message",
-			"description": "Honestly, if you turn this off, you're stupid lmao",
+			"description": "Show chat messages in the overlay",
 			"type": "checkbox",
 			"defaultValue": true,
 			"group": "Appearance"
