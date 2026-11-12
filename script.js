@@ -1305,7 +1305,7 @@ function SetConnectionStatus(connected) {
 //         "subscriptionTier": "1000",
 //         "displayName": "CookieVsCookie",
 //         "color": "#DEC27A",
-//         "channel": "nutty",
+//         "channel": "streamer",
 //         "message": "Cheer1 wasting all of my money 1 bit at time",
 //         "isHighlighted": false,
 //         "isMe": false,
