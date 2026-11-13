@@ -6,7 +6,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
 const sbServerAddress = urlParams.get("address") || "127.0.0.1";
-const sbServerPort = urlParams.get("port") || "8080";
+const sbServerPort = parseInt(urlParams.get("port") || "8080", 10);
 const avatarMap = new Map();
 
 /////////////
@@ -81,15 +81,16 @@ switch (scrollDirection)
 const client = new StreamerbotClient({
 	host: sbServerAddress,
 	port: sbServerPort,
+	autoReconnect: true,
 
 	onConnect: (data) => {
-		console.log(`Streamer.bot successfully connected to ${sbServerAddress}:${sbServerPort}`)
+		console.log(`Streamer.bot successfully connected to ${sbServerAddress}:${sbServerPort}`);
 		console.debug(data);
 		SetConnectionStatus(true);
 	},
 
 	onDisconnect: () => {
-		console.error(`Streamer.bot disconnected from ${sbServerAddress}:${sbServerPort}`)
+		console.error(`Streamer.bot disconnected from ${sbServerAddress}:${sbServerPort}`);
 		SetConnectionStatus(false);
 	}
 });
@@ -1265,18 +1266,20 @@ function GetPermissionLevel(data, platform) {
 // This function sets the visibility of the Streamer.bot status label on the overlay
 function SetConnectionStatus(connected) {
 	let statusContainer = document.getElementById("statusContainer");
+	if (!statusContainer) return;
+
 	if (connected) {
 		statusContainer.style.background = "#2FB774";
-		statusContainer.innerText = "Connected!";
+		statusContainer.innerText = `Connected (${sbServerAddress}:${sbServerPort})!`;
 		statusContainer.style.opacity = 1;
 		setTimeout(() => {
 			statusContainer.style.transition = "all 2s ease";
 			statusContainer.style.opacity = 0;
-		}, 10);
+		}, 2000);
 	}
 	else {
 		statusContainer.style.background = "#D12025";
-		statusContainer.innerText = "Connecting...";
+		statusContainer.innerText = `Connecting to ${sbServerAddress}:${sbServerPort}...`;
 		statusContainer.style.transition = "";
 		statusContainer.style.opacity = 1;
 	}

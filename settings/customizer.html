@@ -479,7 +479,14 @@
 
     function sendTestMessage() {
       if (window.parent && window.parent !== window) {
+        window.parent.postMessage("test", '*');
         window.parent.postMessage({ type: "test" }, '*');
+        try {
+          const parentWidget = window.parent.document.getElementById("widget");
+          if (parentWidget && parentWidget.contentWindow) {
+            parentWidget.contentWindow.postMessage("test", "*");
+          }
+        } catch (err) {}
       }
     }
 
