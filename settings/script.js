@@ -34,6 +34,13 @@ function getParentUrl() {
 
 // Support cross-origin or local postMessage events from customizer
 window.addEventListener("message", function (event) {
+    if (event.data === "test" || (event.data && event.data.type === "test")) {
+        const widget = document.getElementById("widget");
+        if (widget && widget.contentWindow) {
+            widget.contentWindow.postMessage("test", "*");
+        }
+        return;
+    }
     if (typeof event.data === "string" && event.data.length > 0) {
         reloadWidget(event.data);
     } else if (event.data && typeof event.data === "object" && event.data.query) {

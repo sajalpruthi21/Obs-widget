@@ -93,6 +93,19 @@
       color: #ffffff;
     }
 
+    .btn-test {
+      width: auto;
+      padding: 10px 14px;
+      background: #1e3a5f;
+      border-color: #2563eb;
+      color: #93c5fd;
+    }
+
+    .btn-test:hover {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
     .btn-reset {
       width: auto;
       padding: 10px 14px;
@@ -252,6 +265,7 @@
     <input id="widget-url" type="text" readonly>
     <div class="btn-row">
       <button id="copy-btn" class="btn" onclick="copyWidgetUrl()">Click to copy URL</button>
+      <button class="btn btn-test" onclick="sendTestMessage()" title="Send a simulated test chat to the preview">Test Chat</button>
       <button class="btn btn-reset" onclick="resetToDefaults()" title="Reset to default settings">Reset</button>
     </div>
   </div>
@@ -461,6 +475,12 @@
           copyBtn.textContent = 'Click to copy URL';
         }, 2000);
       });
+    }
+
+    function sendTestMessage() {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: "test" }, '*');
+      }
     }
 
     function resetToDefaults() {

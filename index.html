@@ -4,7 +4,12 @@
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="#" />
 	<link rel="stylesheet" href="./style.css" />
-	<script type="text/javascript" src="https://unpkg.com/@streamerbot/client/dist/streamerbot-client.js"></script>
+	<script type="text/javascript" src="./streamerbot-client.js"></script>
+	<script>
+		if (typeof StreamerbotClient === 'undefined') {
+			document.write('<script src="https://unpkg.com/@streamerbot/client/dist/streamerbot-client.js"><\/script>');
+		}
+	</script>
 </head>
 
 <body>

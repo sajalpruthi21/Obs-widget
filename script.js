@@ -1404,3 +1404,57 @@ function SetConnectionStatus(connected) {
 // }`;
 
 // TwitchChatMessage(JSON.parse(data));
+
+// Test Message Trigger (for testing in OBS without waiting for live chat)
+function triggerTestMessage() {
+	TwitchChatMessage({
+		message: {
+			internal: false,
+			msgId: "test-" + Date.now(),
+			userId: "12345",
+			username: "TestViewer",
+			displayName: "TestViewer",
+			color: "#00b4d8",
+			channel: "streamer",
+			message: "Hello from chat! Multichat overlay is working 🎉",
+			isHighlighted: false,
+			isMe: false,
+			isCustomReward: false,
+			isAnonymous: false,
+			isReply: false,
+			bits: 0,
+			firstMessage: false,
+			returningChatter: false,
+			hasBits: false,
+			emotes: [],
+			badges: []
+		},
+		user: {
+			role: 1,
+			badges: [],
+			color: "#00b4d8",
+			id: "12345",
+			name: "TestViewer",
+			type: "twitch"
+		}
+	});
+}
+
+// Auto-trigger test message if ?test=true is in the URL
+if (urlParams.get("test") === "true") {
+	setTimeout(triggerTestMessage, 1500);
+}
+
+// Trigger test message on pressing 'T' key (via OBS Browser Source -> Interact)
+window.addEventListener("keydown", (e) => {
+	if (e.key === "t" || e.key === "T") {
+		triggerTestMessage();
+	}
+});
+
+// Trigger test message via postMessage
+window.addEventListener("message", (e) => {
+	if (e.data === "test" || (e.data && e.data.type === "test")) {
+		triggerTestMessage();
+	}
+});
